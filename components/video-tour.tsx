@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Maximize, Minimize, Pause, Play, Volume2, VolumeX } from "lucide-react";
+import { walkthroughVideo } from "@/lib/site";
 
 const chapters = [
   { name: "Entrance & Living Room", time: 0, label: "0:00" },
@@ -68,7 +69,7 @@ export default function VideoTour({ poster }: { poster: string }) {
         <video
           ref={videoRef}
           className="tour-video"
-          src="/videos/house.mp4"
+          src={walkthroughVideo}
           poster={poster}
           preload="metadata"
           playsInline

@@ -8,6 +8,7 @@ import {
   Square, X,
 } from "lucide-react";
 import { formatPrice, properties, whatsappUrl, type Property } from "@/lib/properties";
+import { walkthroughVideo } from "@/lib/site";
 
 const VideoTour = dynamic(() => import("@/components/video-tour"), {
   ssr: false,
@@ -99,7 +100,7 @@ export function HomePage() {
   return (
     <main id="home">
       <section className="hero">
-        <video className="hero-video" autoPlay muted loop playsInline poster="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=2000&q=85"><source src="/videos/house.mp4" type="video/mp4" /></video>
+        <video className="hero-video" autoPlay muted loop playsInline poster="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=2000&q=85"><source src={walkthroughVideo} type="video/mp4" /></video>
         <div className="hero-overlay" />
         <header className="header page-padding">
           <Logo />
