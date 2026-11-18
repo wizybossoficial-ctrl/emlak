@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { formatPrice, properties, whatsappUrl, type Property } from "@/lib/properties";
 
-const TourCanvas = dynamic(() => import("@/components/tour-canvas"), {
+const VideoTour = dynamic(() => import("@/components/video-tour"), {
   ssr: false,
   loading: () => <div className="tour-placeholder">Preparing your tour...</div>,
 });
@@ -26,7 +26,7 @@ function PropertyCard({ property, onOpen }: { property: Property; onOpen: (prope
         <img src={property.image} alt={`${property.title} interior`} loading="lazy" />
         <div className="card-label">{property.label}</div>
         <button className={`save-button ${saved ? "saved" : ""}`} aria-label={saved ? `Remove ${property.title} from favorites` : `Save ${property.title} to favorites`} aria-pressed={saved} onClick={() => setSaved(!saved)}><Heart size={18} fill={saved ? "currentColor" : "none"} /></button>
-        <button className="tour-badge" onClick={() => onOpen(property)}><span className="tour-cube">◇</span> VIRTUAL 3D TOUR <ArrowUpRight size={14} /></button>
+        <button className="tour-badge" onClick={() => onOpen(property)}><span className="tour-cube">◇</span> VIDEO WALKTHROUGH <ArrowUpRight size={14} /></button>
       </div>
       <div className="card-info">
         <div className="card-topline"><span><MapPin size={14} /> {property.neighborhood}, {property.location}</span><span className="card-number">0{properties.indexOf(property) + 1}</span></div>
@@ -41,7 +41,7 @@ function PropertyModal({ property, onClose }: { property: Property; onClose: () 
   useEffect(() => {
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const onKey = (event: KeyboardEvent) => { if (event.key === "Escape") onClose(); };
+    const onKey = (event: KeyboardEvent) => { if (event.key === "Escape" && !document.fullscreenElement) onClose(); };
     window.addEventListener("keydown", onKey);
     return () => { document.body.style.overflow = previous; window.removeEventListener("keydown", onKey); };
   }, [onClose]);
@@ -52,7 +52,7 @@ function PropertyModal({ property, onClose }: { property: Property; onClose: () 
         <button className="modal-close" onClick={onClose} aria-label="Close property details"><X size={20} /></button>
         <div className="modal-main">
           <div className="modal-heading"><div><span className="eyebrow"><span /> THE VIRTUAL EXPERIENCE</span><h2 id="modal-title">{property.title}</h2><p><MapPin size={15} /> {property.neighborhood}, {property.location}</p></div><div className="modal-price">{formatPrice(property.price)}</div></div>
-          <TourCanvas modelPath={property.modelPath} />
+          <VideoTour poster={property.image} />
           <div className="modal-description"><div><span className="eyebrow"><span /> ABOUT THIS HOME</span><h3>Made for living beautifully.</h3><p>{property.description}</p></div><div className="feature-list">{property.features.map((feature) => <span key={feature}><Check size={14} /> {feature}</span>)}</div></div>
         </div>
         <aside className="modal-sidebar">
@@ -99,7 +99,7 @@ export function HomePage() {
   return (
     <main id="home">
       <section className="hero">
-        <video className="hero-video" autoPlay muted loop playsInline poster="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=2000&q=85"><source src="/house.mp4" type="video/mp4" /></video>
+        <video className="hero-video" autoPlay muted loop playsInline poster="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=2000&q=85"><source src="/videos/house.mp4" type="video/mp4" /></video>
         <div className="hero-overlay" />
         <header className="header page-padding">
           <Logo />
